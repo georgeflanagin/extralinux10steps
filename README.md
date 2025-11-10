@@ -106,4 +106,46 @@ certificates. The following shows the old location followed by the new, correct 
 > 	ldap_tls_cacert = /etc/pki/tls/certs/ca-bundle.crt
 ```
 
+### Update trust model and crypographic algorithms
+
+These commands make the correct settings for the University of Richmond environment.
+
+```
+update-crypto-policies --set LEGACY
+update-ca-trust
+```
+
+### Start the authentication system
+
+You should now be able to start the authentication system:
+
+```
+systemctl enable sssd
+systemctl start sssd
+```
+
+You can check its operation with 
+
+```
+systemctl --no-pager status sssd
+```
+
+The output should look something like this:
+
+---
+● sssd.service - System Security Services Daemon
+     Loaded: loaded (/usr/lib/systemd/system/sssd.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2025-11-06 16:03:38 EST; 3 days ago
+ Invocation: 0f98932c481d427aa650a531981d4305
+   Main PID: 307461 (sssd)
+      Tasks: 5 (limit: 820631)
+     Memory: 133.3M (peak: 133.9M)
+        CPU: 24.060s
+     CGroup: /system.slice/sssd.service
+             ├─307461 /usr/sbin/sssd -i --logger=files
+             ├─307462 /usr/libexec/sssd/sssd_be --domain default --logger=files
+             ├─307463 /usr/libexec/sssd/sssd_nss --logger=files
+             ├─307464 /usr/libexec/sssd/sssd_pam --logger=files
+             └─307465 /usr/libexec/sssd/sssd_autofs --logger=files
+```
 
