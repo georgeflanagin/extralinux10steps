@@ -132,7 +132,7 @@ systemctl --no-pager status sssd
 
 The output should look something like this:
 
----
+```
 ● sssd.service - System Security Services Daemon
      Loaded: loaded (/usr/lib/systemd/system/sssd.service; enabled; preset: enabled)
      Active: active (running) since Thu 2025-11-06 16:03:38 EST; 3 days ago
