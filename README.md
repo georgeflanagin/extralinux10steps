@@ -1,5 +1,8 @@
 # Linux 10.x -- additional installation steps for workstations
 
+**NB**: _This information is current as of 10 November 2025. If you are updating this
+document, please change this date._
+
 ## Disable SELinux
 
 SELinux has its purposes, but it interferes with several scientific packages. The workstations
@@ -8,7 +11,9 @@ the benefits of disabling SELinux far outweigh the perceived benefits of having 
 remain active.
 
 First, disable it within the current session. The effect will be immediate, and you thus
-do not need to reboot to observe the effect.
+do not need to reboot to observe the effect. It is important that disabling SELinux be done
+before other installs. If it is not, then you will see problems with mysteriously changing
+permissions and owners, most obviously when you install components under `sssd`, below.
 ```
 setenforce 0
 ```
@@ -36,7 +41,7 @@ dnf install libgfortran\*
 dnf install libGLU\*
 ```
 
-## NVIDIA drivers and CUDA (current on 10 November 2025)
+## NVIDIA drivers and CUDA 
 
 Locating the rpm requires looking for it on the nvidia.com site. Search for "rocky linux 10 driver rpm download site:nvidia.com" and you will likely find yourself on the https://developer.nvidia.com/datacenter-driver-downloads page, which does have a Rocky 10 section after following the prompts. The one most recently retrieved is this one:
 ```
@@ -47,3 +52,23 @@ The Linux 10 drivers support CUDA versions <= 13.0. You should be able to instal
 ```
 dnf install cuda-toolkit
 ```
+
+## Centralized authentication
+
+University of Richmond uses an AD/LDAP central system to support password authentication single sign-on across most
+university owned computers on campus. If the university has switched to key-based authentication before you are
+reading this article, then you may skip this section entirely. If keys are used, then no other authentication methods
+are attempted.
+
+### Get the files
+
+Two files are involved: `/etc/krb5.conf` and `/etc/sssd/sssd.conf`. These files can be obtained from other
+workstations as they provide information about the AD/LDAP authentication system's servers rather than 
+providing information about the workstation. At this time, LDAP requests that originate from the VPN or the
+on-campus networks are assumed to be legitimate.
+
+The kerberos file, `/etc/krb5.conf` can be dropped into its location overwriting the skeleton file that
+is provided as a part of a clean installation of Linux 10. This file is world readable, so no changes to its
+permissions are required.
+
+The sssd file, `/etc/sssd/sssd.conf` will need to have its permissions set to `0600`. The owner should be root
