@@ -22,6 +22,7 @@ Second, edit the `/etc/selinux/config` file so that the first non-comment line r
 ```
 SELINUX=disabled
 ```
+On reboot, SELinux will not return to life.
 
 ## Extra libraries
 
