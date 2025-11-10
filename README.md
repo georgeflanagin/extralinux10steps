@@ -18,6 +18,12 @@ Second, edit the `/etc/selinux/config` file so that the first non-comment line r
 SELINUX=disabled
 ```
 
+# NVIDIA drivers (current on 10 November 2025)
+
+Locating the rpm requires looking for it on the nvidia.com site. Search for "rocky linux 10 driver rpm download site:nvidia.com" and you will likely find yourself on the https://developer.nvidia.com/datacenter-driver-downloads page, which does have a Rocky 10 section after following the prompts. The one most recently retrieved is this one:
+```
+wget https://developer.download.nvidia.com/compute/nvidia-driver/580.105.08/local_installers/nvidia-driver-local-repo-rhel10-580.105.08-1.0-1.x86_64.rpm
+```
 
 # Extra libraries
 
