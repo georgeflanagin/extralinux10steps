@@ -1,6 +1,6 @@
 # Linux 10.x -- additional installation steps for workstations
 
-**NB**: _This information is current as of 10 November 2025. If you are updating this
+**NB**: _This information is current as of 11 November 2025. If you are updating this
 document, please change this date._
 
 ## Disable SELinux
