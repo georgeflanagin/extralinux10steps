@@ -24,6 +24,13 @@ SELINUX=disabled
 ```
 On reboot, SELinux will not return to life.
 
+## Update the installed image
+
+The install media will be behind the current release even if you created the install media
+moments ago.
+
+`dnf update`
+
 ## Extra libraries
 
 While these are _generally_ needed in the workstation environment, the locations and
