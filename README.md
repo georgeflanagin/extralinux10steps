@@ -233,3 +233,107 @@ ln -s /usr/local/chem.sw/Columbus Columbus
 cd /usr/local
 for f in $(ls -1 chem.sw); do ln -s "chem.sw/$f" "$f"; done
 ```
+
+## NVIDIA
+
+**Achtung!** *This process is prone to minor mistakes that cause installation failures.*
+
+NOTE: It is beneficial to have the display driver installed even on the workstations where the 
+GPU is poorly suited for calculations. The video response is generally better when the display
+is driven from the GPU card / driver combo.
+
+### Preliminary work
+
+
+The driver and CUDA are both *built* on the workstation. For the build to take place, the headers and development
+system for the present kernel must be present.
+
+```
+dnf config-manager --set-enabled crb
+dnf install kernel-headers\*
+dnf install kernel-devel\*
+```
+
+### Driver installation
+
+#### Get the driver
+
+Go to https://www.nvidia.com/en-us/drivers/ and choose the correct driver.
+
+1. Enter the model of the GPU.
+2. Choose Rocky Linux 10 as the OS.
+3. Click "Find"
+4. Click "View"
+5. Click "Download"
+
+#### 
+
+### Cuda installation
+
+Note: Cuda 11.7 is resident on the NAS that supplies `/usr/local to the workstations. Choice of CUDA 
+versions is done through the `alternatives` system.
+
+### GPU Direct Filesystem Installation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
