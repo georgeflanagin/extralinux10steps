@@ -266,12 +266,19 @@ Go to https://www.nvidia.com/en-us/drivers/ and choose the correct driver.
 4. Click "View"
 5. Click "Download"
 
-#### 
+#### Install the driver
+
+The driver must be installed before the remainder of the steps. CUDA and the GDS rely on the driver's
+presence. 
+
+blah blah blah
 
 ### Cuda installation
 
-Note: Cuda 11.7 is resident on the NAS that supplies `/usr/local to the workstations. Choice of CUDA 
+Note: Cuda 11.7 is resident on the NAS that supplies `/usr/local` to the workstations. Choice of CUDA 
 versions is done through the `alternatives` system.
+
+As with the NVIDIA drivers, CUDA is obtained via a webpage: https://developer.nvidia.com/cuda-downloads
 
 ### GPU Direct Filesystem Installation
 
