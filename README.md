@@ -280,6 +280,12 @@ versions is done through the `alternatives` system.
 
 As with the NVIDIA drivers, CUDA is obtained via a webpage: https://developer.nvidia.com/cuda-downloads
 
+1. Click `Linux`
+2. Click `x86_64`
+3. Click `Rocky`
+4. Click `10`
+5. Click `rpm (local)`
+
 ### GPU Direct Filesystem Installation
 
 
