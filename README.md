@@ -1,6 +1,6 @@
 # Linux 10.x -- additional installation steps for workstations
 
-**NB**: _This information is current as of 11 November 2025. If you are updating this
+**NB**: _This information is current as of 9 December 2025. If you are updating this
 document, please change this date._
 
 ## Disable SELinux
@@ -14,7 +14,7 @@ First, disable it within the current session. The effect will be immediate, and 
 do not need to reboot to observe the effect. It is important that disabling SELinux be done
 before other installs. If it is not, then you will see problems with mysteriously changing
 permissions and owners, most obviously when you install components under `sssd`, below.
-```
+```bash
 setenforce 0
 ```
 
@@ -42,7 +42,7 @@ that were current in 8.10 are now in compatibility libraries.
 Many of the installations below could be combined into a single `dnf install ...` command,
 but they are listed individually for clarity.
 
-```
+```bash
 dnf install epel-release
 dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel10/x86_64/cuda-rhel10.repo
 dnf install environment-modules
@@ -64,7 +64,7 @@ Once installed, the usual `dnf update` process will update them if required. Als
 the packages (perhaps most) may already be present depending on which install image was chosen when
 Linux 10 was installed.
 
-```
+```bash
 dnf install bc 
 dnf install bison\*
 dnf install bzip2 bzip2-devel
@@ -98,13 +98,13 @@ For all of these legacy libraries, you will need to create the appropriate symbo
 if you need `libffi.so.6`, the most recent version you are likely to find is `libffi.so.6.0.2`. Consequently,
 you will need these links in `/usr/lib64`:
 
-```
+```bash
 ln -s libffi.so.6.0.2 libffi.so.6
 ln -s libffi.so.6.0.2 libffi.so.6.0
 ```
 
 Libraries:
-```
+```bash
 libffi.so.6
 ```
 
@@ -145,7 +145,7 @@ The sssd file, `/etc/sssd/sssd.conf` will be a new file.
 
 The permissions and owners should be set appropriately:
 
-```
+```bash
 [~]: tree -pug /etc/sssd
 [drwxr-x--- root     sssd    ]  /etc/sssd
 ├── [drwxr-x--x root     sssd    ]  conf.d
@@ -155,7 +155,7 @@ The permissions and owners should be set appropriately:
 
 The commands needed to accomplish the above setup are:
 
-```
+```bash
 chown -R root:sssd /etc/sssd
 chmod 750 /etc/sssd
 chmod 751 /etc/sssd/conf.d
@@ -168,7 +168,7 @@ chmod 640 /etc/sssd/sssd.conf
 If you obtained the `sssd.conf` file from a Linux 8 or 9 computer, you must correct the location of the
 certificates. The following shows the old location followed by the new, correct location:
 
-```
+```bash
 < 	ldap_tls_cacert = /etc/openldap/cacerts/ca-chain.pem
 ---
 > 	ldap_tls_cacert = /etc/pki/tls/certs/ca-bundle.crt
@@ -178,7 +178,7 @@ certificates. The following shows the old location followed by the new, correct 
 
 These commands make the correct settings for the University of Richmond environment.
 
-```
+```bash
 update-crypto-policies --set LEGACY
 update-ca-trust
 ```
@@ -187,14 +187,14 @@ update-ca-trust
 
 You should now be able to start the authentication system:
 
-```
+```bash
 systemctl enable sssd
 systemctl start sssd
 ```
 
 You can check its operation with 
 
-```
+```bash
 systemctl --no-pager status sssd
 ```
 
@@ -223,13 +223,13 @@ Add this entry to `/etc/fstab`:
 
 `141.166.186.35:/mnt/usrlocal/8  /usr/local/chem.sw  nfs     ro,nosuid,nofail,_netdev,bg,timeo=10,retrans=2 0 0`
 
-```
+```bash
 mkdir -p /usr/local/columbus/Col7.2.2_2023-09-06_linux64.ifc_bin
 cd /usr/local/columbus/Col7.2.2_2023-09-06_linux64.ifc_bin
 ln -s /usr/local/chem.sw/Columbus Columbus
 ```
 
-```
+```bash
 cd /usr/local
 for f in $(ls -1 chem.sw); do ln -s "chem.sw/$f" "$f"; done
 ```
@@ -248,7 +248,7 @@ is driven from the GPU card / driver combo.
 The driver and CUDA are both *built* on the workstation. For the build to take place, the headers and development
 system for the present kernel must be present.
 
-```
+```bash
 dnf config-manager --set-enabled crb
 dnf install kernel-headers\*
 dnf install kernel-devel\*
@@ -273,6 +273,19 @@ presence.
 
 blah blah blah
 
+```bash
+systemctl stop gdm
+systemctl disable gdm
+shutdown -r now
+```
+
+Proceed with the driver installation.
+
+```bash
+systemctl enable gdm
+systemctl start gdm
+```
+
 ### Cuda installation
 
 Note: Cuda 11.7 is resident on the NAS that supplies `/usr/local` to the workstations. Choice of CUDA 
@@ -285,6 +298,11 @@ As with the NVIDIA drivers, CUDA is obtained via a webpage: https://developer.nv
 3. Click `Rocky`
 4. Click `10`
 5. Click `rpm (local)`
+
+You will get a file with a name like this: `cuda-repo-rhel10-13-0-local-13.0.1_580.82.07-1.x86_64.rpm`
+(It will probably say 13.1.xxx because that's the current version of Cuda.)
+
+
 
 ### GPU Direct Filesystem Installation
 
