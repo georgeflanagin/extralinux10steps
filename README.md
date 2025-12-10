@@ -121,17 +121,7 @@ libffi.so.6
 ```
 
 
-## NVIDIA drivers and CUDA 
 
-Locating the rpm requires looking for it on the nvidia.com site. Search for "rocky linux 10 driver rpm download site:nvidia.com" and you will likely find yourself on the https://developer.nvidia.com/datacenter-driver-downloads page, which does have a Rocky 10 section after following the prompts. The one most recently retrieved is this one:
-```
-wget https://developer.download.nvidia.com/compute/nvidia-driver/580.105.08/local_installers/nvidia-driver-local-repo-rhel10-580.105.08-1.0-1.x86_64.rpm
-```
-
-The Linux 10 drivers support CUDA versions <= 13.0. You should be able to install the current CUDA toolkit with:
-```
-dnf install cuda-toolkit
-```
 
 ## Centralized authentication
 
@@ -253,9 +243,13 @@ for f in $(ls -1 chem.sw); do ln -s "chem.sw/$f" "$f"; done
 NOTE: It is beneficial to have the display driver installed even on the workstations where the 
 GPU is poorly suited for calculations. The video response is generally better when the display
 is driven from the GPU card / driver combo.
+## NVIDIA drivers and CUDA 
+
+```
+wget https://developer.download.nvidia.com/compute/nvidia-driver/580.105.08/local_installers/nvidia-driver-local-repo-rhel10-580.105.08-1.0-1.x86_64.rpm
+```
 
 ### Preliminary work
-
 
 The driver and CUDA are both *built* on the workstation. For the build to take place, the headers and development
 system for the present kernel must be present.
@@ -277,6 +271,12 @@ Go to https://www.nvidia.com/en-us/drivers/ and choose the correct driver.
 3. Click "Find"
 4. Click "View"
 5. Click "Download"
+
+Backup plan: This driver is known to work:
+
+```bash
+wget https://developer.download.nvidia.com/compute/nvidia-driver/580.105.08/local_installers/nvidia-driver-local-repo-rhel10-580.105.08-1.0-1.x86_64.rpm
+```
 
 #### Install the driver
 
@@ -302,21 +302,31 @@ blacklist nouveau
 options nouveau modeset=
 ```
 
+The boot process must be made aware of the changes:
+
+[1] Rebuild the bootable image: `dracut –force`
+
+[2] If the directory `/sys/firmware/efi` exists, then
 
 ```bash
-systemctl stop gdm
+grub2-mkconfig -o /boot/efi/EFI/rocky/grub.cfg
+``` 
+
+otherwise
+
+```bash
+grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
+Disable the graphic display manager, and reboot the computer in text mode so that it is 
+simpler to install the NVIDIA software.
+
+```bash
 systemctl disable gdm
 systemctl set-default multiuser.target
 shutdown -r now
 ```
 
-
-Proceed with the driver installation.
-
-```bash
-systemctl enable gdm
-systemctl start gdm
-```
 
 ### Cuda installation
 
