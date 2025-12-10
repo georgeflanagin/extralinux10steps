@@ -9,7 +9,8 @@ looks for bootable volumes. It is impossible to provide more precise information
 of this feature varies between motherboards.
 
 Additionally, the identifier for the USB drive can also vary. One working strategy is to 
-promote all USB devices to a higher priority than the internal drive.
+promote all USB devices to a higher priority than the internal drive. At this point, you
+should be able to reboot into the OS of the installation USB drive.
 
 **NB**: _This information is current as of 9 December 2025. If you are updating this
 document, please change this date._
@@ -282,13 +283,33 @@ Go to https://www.nvidia.com/en-us/drivers/ and choose the correct driver.
 The driver must be installed before the remainder of the steps. CUDA and the GDS rely on the driver's
 presence. 
 
-blah blah blah
+##### Prevent nouveau from loading at boot.
+
+The `nouveau` driver is the default graphics driver included with the Rocky Linux distro. It must 
+be both disabled and removed before another graphics driver can be installed.
+
+[1] Edit the file `/etc/default/grub`. There will be a line that
+starts with `GRUB_CMDLINE_LINUX=" . . .` At the end of this line,
+and inside the quote marks, add the following text:
+
+`modprobe.blacklist=nouveau`
+
+ [2]Create files `/etc/modprobe.d/blacklist-nouveau.conf` and
+`/etc/modprobe.d/denylist.conf` To each file add these lines:
+
+```
+blacklist nouveau
+options nouveau modeset=
+```
+
 
 ```bash
 systemctl stop gdm
 systemctl disable gdm
+systemctl set-default multiuser.target
 shutdown -r now
 ```
+
 
 Proceed with the driver installation.
 
