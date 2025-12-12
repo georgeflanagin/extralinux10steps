@@ -12,8 +12,34 @@ Additionally, the identifier for the USB drive can also vary. One working strate
 promote all USB devices to a higher priority than the internal drive. At this point, you
 should be able to reboot into the OS of the installation USB drive.
 
-**NB**: _This information is current as of 9 December 2025. If you are updating this
+**NB**: _This information is current as of 12 December 2025. If you are updating this
 document, please change this date._
+
+## Use visudo to avoid constantly typing your password
+
+```bash
+sudo visudo
+```
+Find the lines that say this:
+
+```
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+```
+
+Comment out the first line about the wheel group, and uncomment the second line so that
+they look like this:
+
+```
+## Allows people in group wheel to run all commands
+# %wheel  ALL=(ALL)       ALL
+
+## Same thing without a password
+%wheel        ALL=(ALL)       NOPASSWD: ALL
+```
 
 ## Disable SELinux
 
