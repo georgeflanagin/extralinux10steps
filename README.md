@@ -41,6 +41,8 @@ they look like this:
 %wheel        ALL=(ALL)       NOPASSWD: ALL
 ```
 
+For the rest of the operations, you need to be `root`, so `su root`.
+
 ## Disable SELinux
 
 SELinux has its purposes, but it interferes with several scientific packages. The workstations
@@ -52,8 +54,10 @@ First, disable it within the current session. The effect will be immediate, and 
 do not need to reboot to observe the effect. It is important that disabling SELinux be done
 before other installs. If it is not, then you will see problems with mysteriously changing
 permissions and owners, most obviously when you install components under `sssd`, below.
+
 ```bash
 setenforce 0
+grubby --update-kernel ALL --args selinux=0
 ```
 
 Second, edit the `/etc/selinux/config` file so that the first non-comment line reads:
