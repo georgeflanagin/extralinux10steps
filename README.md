@@ -132,7 +132,8 @@ dnf -y install netcdf-devel openmpi-devel fftw-devel
 dnf -y install openmpi\* 
 dnf -y install patch 
 dnf -y install perl 
-dnf -y install python3-devel 
+dnf -y install python3-devel
+dnf -y install python3-dnf-plugin-versionlock
 dnf -y install tcsh 
 dnf -y install tcl-devel
 dnf -y install sssd-tools
@@ -253,6 +254,12 @@ The output should look something like this:
              ├─307463 /usr/libexec/sssd/sssd_nss --logger=files
              ├─307464 /usr/libexec/sssd/sssd_pam --logger=files
              └─307465 /usr/libexec/sssd/sssd_autofs --logger=files
+```
+
+#### Assuming this works ...
+
+```bash
+dnf install python3-dnf-plugin-versionlock
 ```
 
 ### Setting up the /usr/local software from the NAS
