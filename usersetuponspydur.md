@@ -41,7 +41,7 @@ owned by the trustee group with group write.
 the idea that everything has its place. When changes are requested or needed, it is 
 clear what file will contain the change.*
 
-### /etc/profile, /etc/bashrc, *etc*
+### `/etc/profile`, `/etc/bashrc`, *etc*
 
 All interactive sessions (i.e., login from a text based terminal, or login via ssh) read this
 file. This file should never be modified. 
@@ -51,7 +51,7 @@ Similarly, this file should not be modified. Customizations are done by adding f
 the `/etc/profile.d` directory, and they are read by the last few lines of `/etc/bashrc`, 
 and are processed in alphabetic order. 
 
-### $HOME/.bash_profile and $HOME/.bashrc
+### `$HOME/.bash_profile` and `$HOME/.bashrc`
 
 These files typically setup a user's `$PATH` and other common elements of the environment.
 In many/most environments the elements of the environment that apply to all users are
