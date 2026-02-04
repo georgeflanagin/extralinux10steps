@@ -32,6 +32,10 @@ membership allows the privileged user `installer` to impersonate the user.
 
 ## When users login on any Linux computer ...
 
+*NB: The design of this process supports flexibility, but more importantly it supports
+the idea that everything has its place. When changes are requested or needed, it is 
+clear what file will contain the change.*
+
 ### /etc/profile, /etc/bashrc, *etc*
 
 All interactive sessions (i.e., login from a text based terminal, or login via ssh) read this
@@ -52,4 +56,19 @@ ideal place for user customizations.
 
 ## When users login on Spydur
 
-The user `$HOME/.bashrc` file reads the file `/usr/local/etc/usersrc`
+The user `$HOME/.bashrc` file reads the files in `/usr/local/sw/etc/usersrc` according to
+the rules below.
+
+The first file read is `/usr/local/etc/usersrc/common.rc`. It is the one that holds the
+system's organization and it dates from October 20, 2021. It contains a number of shell 
+functions that would be normally found in the `$HOME/.bashrc` file on systems with only a few users.
+
+The `common.rc` makes a note of all the department groups to which the user belongs. 
+It sorts the list of departments, and applies any departmental customizations that are
+found in files whose name fits the pattern `/usr/local/etc/usersrc/{department}`. These files
+contain shortcuts that make it easier for `chem`'s users to use chemistry software, as an example.
+
+Then `common.rc` goes through the user's "dollar sign" groups to apply customizations
+requested by the faculty member associated with the group. These customizations often
+relate to a specific research project or a specific class being taught. Many of these files
+are empty.
