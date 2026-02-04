@@ -21,7 +21,8 @@ to identify these groups visually). Example, `gflanagi$`.
 Each user who is a member of the `faculty` group has one of these eponymous groups, 
 and is a member of that group. So, `gflanagi` is a member of `gflanagi$`.
 
-A user, mainly students, may be a member of more than one of the "dollar sign" groups.
+Students are members of the `student` group. Many students are members of more than 
+one of the "dollar sign" groups.
 
 Most users are also a member of one or more department groups. These groups are all
 four letters long, again just for ease of visual identification. Examples: `chem`, `econ`,
@@ -29,6 +30,10 @@ four letters long, again just for ease of visual identification. Examples: `chem
 
 On Spydur, ordinary users are also a member of the group named `managed`, and that
 membership allows the privileged user `installer` to impersonate the user.
+
+The final group of significance is the `trustee` group. Some of the directories that
+contain software that is managed by one "power user" but used by several others are
+owned by the trustee group with group write. 
 
 ## When users login on any Linux computer ...
 
