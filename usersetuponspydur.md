@@ -1,7 +1,7 @@
 # User setup on Spydur
 
 This document summarizes how users on Spydur acquire their environment and the shell
-functions in it. This kind of user setup is very common, if not completely a "standard."
+functions in it. This setup using groups is very common, if not completely a "standard."
 
 ## User organization
 
